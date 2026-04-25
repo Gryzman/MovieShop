@@ -7,14 +7,6 @@ namespace Project1_v2.Functions
     {
         private string connectionString = @"Server=LAPTOP-8THJJ3C4\SQLEXPRESS; Database=MovieShop; Integrated Security=True; TrustServerCertificate=True;";
 
-        // wyświetl 10 ostatnich zamówień
-        //string query = "SELECT TOP 10 * FROM Purchases ORDER BY ID DESC";
-
-        // wyświetl zamówienia klienta
-        //string query = "SELECT * FROM Purchases WHERE ID = (SELECT ID FROM Clients WHERE PhoneNumber = @phone)";
-
-        // wyświetl zamówienia filmu
-        //string query = "SELECT * FROM Purchases WHERE ID = (SELECT ID FROM Movies WHERE Title = @title)";
         public void addClientToDatabase(string name, string surname, string email, string phone)
         {
             string query = "INSERT INTO Clients (Name, Surname, Email, PhoneNumber) VALUES (@name, @surname, @email, @phone)";
@@ -41,10 +33,6 @@ namespace Project1_v2.Functions
             catch (SqlException ex)
             {
                 MessageBox.Show("Błąd bazy danych: " + ex.Message);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Błąd: " + ex.Message);
             }
         }
 
@@ -76,9 +64,36 @@ namespace Project1_v2.Functions
             {
                 MessageBox.Show("Błąd bazy danych: " + ex.Message);
             }
-            catch (Exception ex)
+        }
+
+        public void registerPurchaseToDatabase(string phone, string title)
+        {
+            string query = @"INSERT INTO Purchases1 (DateOfPurchase, ClientID, MovieID)
+                                VALUES (GETDATE(),
+                                (SELECT ClientID FROM Clients WHERE PhoneNumber = @phone),
+                                (SELECT MovieID FROM Movies WHERE Title = @title)
+                                )";
+
+            try
             {
-                MessageBox.Show("Błąd: " + ex.Message);
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@phone", phone);
+                    command.Parameters.AddWithValue("@title", title);
+
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Pomyślnie zarejestrowano zakup!");
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Błąd bazy danych: " + ex.Message);
             }
         }
     }

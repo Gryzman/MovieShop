@@ -24,7 +24,7 @@ namespace Project1_v2.Windows
 
             Shop shop = new Shop();
 
-            if (yearOfPremiere < 1960 && yearOfPremiere > 2026 || price <= 0.0)
+            if (yearOfPremiere < 1960 && yearOfPremiere > 2026 || price <= 0.0 || string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(director) || string.IsNullOrWhiteSpace(genre))
             {
                 isDataCorrect = false;
             }

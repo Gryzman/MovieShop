@@ -185,7 +185,7 @@
         <TextBlock Name="ClientList" HorizontalAlignment="Left" Margin="257,13,0,0" TextWrapping="Wrap" Text="Klienci" VerticalAlignment="Top" FontWeight="Bold" FontSize="18"/>
         <TextBlock Name="MovieList" HorizontalAlignment="Left" Margin="257,199,0,0" TextWrapping="Wrap" Text="Filmy" VerticalAlignment="Top" FontWeight="Bold" FontSize="18"/>
         <TextBlock Name="PurchaseHistory" HorizontalAlignment="Left" Margin="257,391,0,0" TextWrapping="Wrap" Text="Ostatnie zakupy" VerticalAlignment="Top" FontWeight="Bold" FontSize="18"/>
-        <DataGrid x:Name="ClientsGrid" ItemsSource="{Binding Clients}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="257,42,10,470" SelectionMode="Single" SelectionChanged="ClientsGrid_SelectionChanged">
+        <DataGrid x:Name="ClientsGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="257,42,10,470" SelectionMode="Single" SelectionChanged="ClientsGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Imię" Binding="{Binding Name}" Width="*"/>
                 <DataGridTextColumn Header="Nazwisko" Binding="{Binding Surname}" Width="*"/>
@@ -193,7 +193,7 @@
                 <DataGridTextColumn Header="Numer telefonu" Binding="{Binding PhoneNumber}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="MoviesGrid" ItemsSource="{Binding Movies}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="257,228,10,278" SelectionMode="Single" SelectionChanged="MoviesGrid_SelectionChanged">
+        <DataGrid x:Name="MoviesGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="257,228,10,278" SelectionMode="Single" SelectionChanged="MoviesGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Tytuł" Binding="{Binding Title}" Width="2*"/>
                 <DataGridTextColumn Header="Reżyser" Binding="{Binding Director}" Width="2*"/>
@@ -202,6 +202,14 @@
                 <DataGridTextColumn Header="Cena" Binding="{Binding Price}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=10}" Margin="257,420,10,10"/>
+        <DataGrid x:Name="PurchasesGrid" AutoGenerateColumns="false" CanUserAddRows="false" Margin="257,420,10,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Data zakupu" Binding="{Binding DateOfPurchase, StringFormat=\{0:dd.MM.yyyy\}}" Width="1.5*"/>
+                <DataGridTextColumn Header="Imię klienta" Binding="{Binding Name}" Width="2*"/>
+                <DataGridTextColumn Header="Nazwisko klienta" Binding="{Binding Surname}" Width="2*"/>
+                <DataGridTextColumn Header="Tytuł filmu" Binding="{Binding Title}" Width="2*"/>
+                <DataGridTextColumn Header="Cena filmu" Binding="{Binding Price}" Width="1.5*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

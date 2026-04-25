@@ -15,6 +15,7 @@ public partial class MainWindow : Window
         InitializeComponent();
         loadClients();
         loadMovies();
+        loadPurchaseHistory();
     }
 
     private void AddClient_Click(object sender, RoutedEventArgs e)
@@ -39,7 +40,8 @@ public partial class MainWindow : Window
 
     private void AddPurchase_Click(object sender, RoutedEventArgs e)
     {
-
+        AddPurchase addPurchase = new AddPurchase();
+        addPurchase.ShowDialog();
     }
 
     public void loadClients()
@@ -88,9 +90,45 @@ public partial class MainWindow : Window
         }
     }
 
+    public void loadPurchaseHistory()
+    {
+        string query = @"SELECT TOP 10 p.DateOfPurchase, c.Name, c.Surname, m.Title, m.Price 
+                            FROM Purchases1 AS p
+                            JOIN Clients AS C ON c.ClientID = p.ClientID
+                            JOIN Movies AS m ON m.MovieID = p.MovieID
+                            ORDER BY p.PurchaseID DESC
+                            ";
+
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                PurchasesGrid.ItemsSource = dataTable.DefaultView;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Błąd: " + ex.Message);
+        }
+    }
+
     private void ClientsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        DeleteClient.IsEnabled = (ClientsGrid.SelectedItem != null);
+        if(ClientsGrid.SelectedItem != null)
+        {
+            MoviesGrid.SelectedItem = null;
+            DeleteMovie.IsEnabled = false;
+            ShowMoviePurchaseHistory.IsEnabled = false;
+
+            DeleteClient.IsEnabled = true;
+            ShowClientPurchaseHistory.IsEnabled = true;
+        }
     }
 
     private void DeleteClient_Click(object sender, RoutedEventArgs e)
@@ -137,7 +175,15 @@ public partial class MainWindow : Window
 
     private void MoviesGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        DeleteMovie.IsEnabled = (MoviesGrid.SelectedItem != null);
+        if(MoviesGrid.SelectedItem != null)
+        {
+            ClientsGrid.SelectedItem = null;
+            DeleteClient.IsEnabled = false;
+            ShowClientPurchaseHistory.IsEnabled = false;
+
+            DeleteMovie.IsEnabled = true;
+            ShowMoviePurchaseHistory.IsEnabled = true;
+        }
     }
 
     private void DeleteMovie_Click(object sender, RoutedEventArgs e)
