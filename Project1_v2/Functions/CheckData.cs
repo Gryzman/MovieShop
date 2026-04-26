@@ -4,6 +4,7 @@ namespace Project1_v2.Functions
 {
     class CheckData
     {
+        // sprawdzanie Emaila
         public bool CheckEmail(string email)
         {
             string patternEmail = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
@@ -20,6 +21,7 @@ namespace Project1_v2.Functions
             }
         }
 
+        // sprawdzanie numeru telefonu
         public bool CheckPhoneNumber(string phoneNumber)
         {
             string patternPhone = "^[1-9][0-9]{8}$";
@@ -36,6 +38,7 @@ namespace Project1_v2.Functions
             }
         }
 
+        // sprawdzanie imienia, nazwiska
         public bool CheckName(string name)
         {
             string patternName = "^[A-Z]";

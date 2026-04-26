@@ -124,7 +124,7 @@
         <TextBox Name="moTitle" HorizontalAlignment="Left" Margin="168,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="62,149,0,0" TextWrapping="Wrap" Text="Telefon klienta:" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="62,0,0,0" TextWrapping="Wrap" Text="Tytuł filmu:" VerticalAlignment="Center"/>
-        <Button Style="{DynamicResource RegisterPurchase}" Name="btnRegisterPurchase" Content="Zarejestruj zakup" HorizontalAlignment="Center" Margin="0,275,0,0" VerticalAlignment="Top" Padding="5" Width="120" Click="btnAddClient_Click"/>
+        <Button Style="{DynamicResource RegisterPurchase}" Name="btnRegisterPurchase" Content="Zarejestruj zakup" HorizontalAlignment="Center" Margin="0,275,0,0" VerticalAlignment="Top" Padding="5" Width="120" Click="btnRegisterPurchase_Click"/>
         <Button Style="{DynamicResource CloseWindow}" Name="btnClose" Content="Zamknij okno" HorizontalAlignment="Center" Margin="0,328,0,0" VerticalAlignment="Top" Padding="5" Width="120" Click="btnClose_Click"/>
 
     </Grid>

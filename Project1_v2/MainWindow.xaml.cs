@@ -10,6 +10,7 @@ public partial class MainWindow : Window
 {
     private string connectionString = @"Server=LAPTOP-8THJJ3C4\SQLEXPRESS; Database=MovieShop; Integrated Security=True; TrustServerCertificate=True;";
 
+    // załadowanie danych do DataGridów
     public MainWindow()
     {
         InitializeComponent();
@@ -18,6 +19,7 @@ public partial class MainWindow : Window
         LoadRecentPurchaseHistory();
     }
 
+    // otwarcie okna AddClient
     private void AddClient_Click(object sender, RoutedEventArgs e)
     {
         AddClient addClient = new AddClient();
@@ -29,6 +31,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // otwarcie okna AddMovie
     private void AddMovie_Click(object sender, RoutedEventArgs e)
     {
         AddMovie addMovie = new AddMovie();
@@ -40,6 +43,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // otwarcie okna AddPurchase
     private void AddPurchase_Click(object sender, RoutedEventArgs e)
     {
         AddPurchase addPurchase = new AddPurchase();
@@ -50,6 +54,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // funkcja pobierająca klientów
     public void LoadClients()
     {
         string query = "SELECT * FROM Clients WHERE Active = 1";
@@ -73,6 +78,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // funckja pobierająca filmy
     public void LoadMovies()
     {
         string query = "SELECT * FROM Movies WHERE Active = 1";
@@ -96,6 +102,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // funkcja pobierająca ostatnią historię zakupów
     public void LoadRecentPurchaseHistory()
     {
         string query = @"SELECT TOP 10 p.DateOfPurchase, c.Name, c.Surname, m.Title, m.Price 
@@ -124,6 +131,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // przycisk wyświetlającą ostatnią historię
     private void ShowRecentPurchaseHistory_Click(object sender, RoutedEventArgs e)
     {
         LoadRecentPurchaseHistory();
@@ -131,12 +139,14 @@ public partial class MainWindow : Window
         MoviesGrid.SelectedItem = null;
         ClientsGrid.SelectedItem = null;
 
+        // wyłączenie pozostałych przycisków
         DeleteMovie.IsEnabled = false;
         ShowMoviePurchaseHistory.IsEnabled = false;
         DeleteClient.IsEnabled = false;
         ShowClientPurchaseHistory.IsEnabled = false;
     }
 
+    // funkcja określająca wybranego klienta z DataGrid
     private void ClientsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if(ClientsGrid.SelectedItem != null)
@@ -150,6 +160,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // przycisk do usuwania klienta
     private void DeleteClient_Click(object sender, RoutedEventArgs e)
     {
         var selectedRow = ClientsGrid.SelectedItem as DataRowView;
@@ -168,6 +179,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // funkcja "usuwająca" klienta
     private void DeleteClientFromDB(object id)
     {
         string query = @"UPDATE Clients 
@@ -195,6 +207,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // wyświetlenie historii zakupów klienta
     private void ShowClientPurchaseHistory_Click(object sender, RoutedEventArgs e)
     {
         var selectedRow = ClientsGrid.SelectedItem as DataRowView;
@@ -207,6 +220,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // funkcja pobierająca dane z bazy
     private void ClientPurchaseHistoryFromDB(object id)
     {
         string query = @"SELECT p.DateOfPurchase, c.Name, c.Surname, m.Title, m.Price 
@@ -236,6 +250,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // funkcja określająca wybrany film z DataGrid
     private void MoviesGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if(MoviesGrid.SelectedItem != null)
@@ -249,6 +264,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // przycisk do usuwania filmu
     private void DeleteMovie_Click(object sender, RoutedEventArgs e)
     {
         var selectedRow = MoviesGrid.SelectedItem as DataRowView;
@@ -267,6 +283,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // funkcja "usuwająca" film
     private void DeleteMovieFromDB(object id)
     {
         string query = @"UPDATE Movies
@@ -294,6 +311,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // wyświetlenie historii zakupu filmu
     private void ShowMoviePurchaseHistory_Click(object sender, RoutedEventArgs e)
     {
         var selectedRow = MoviesGrid.SelectedItem as DataRowView;
@@ -306,6 +324,7 @@ public partial class MainWindow : Window
         }
     }
 
+    // funkcja pobierająca dane z bazy
     private void MoviePurchaseHistoryFromDB(object id)
     {
         string query = @"SELECT p.DateOfPurchase, c.Name, c.Surname, m.Title, m.Price 

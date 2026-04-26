@@ -10,6 +10,7 @@ namespace Project1_v2.Windows
             InitializeComponent();
         }
 
+        // dodawanie filmu
         private void btnAddMovie_Click(object sender, RoutedEventArgs e)
         {
             var title = moTitle.Text;
@@ -24,6 +25,7 @@ namespace Project1_v2.Windows
 
             Shop shop = new Shop();
 
+            // sprawdzanie czy dane są poprawne
             if (yearOfPremiere < 1900 && yearOfPremiere > 2026 || price <= 0.0 || string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(director) || string.IsNullOrWhiteSpace(genre))
             {
                 isDataCorrect = false;
@@ -46,6 +48,7 @@ namespace Project1_v2.Windows
             }
         }
 
+        // przycisk do zamknięcia okna
         private void CloseWindow_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;

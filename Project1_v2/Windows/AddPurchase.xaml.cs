@@ -10,7 +10,8 @@ namespace Project1_v2.Windows
             InitializeComponent();
         }
 
-        private void btnAddClient_Click(object sender, RoutedEventArgs e)
+        // rejestrowanie zakupu
+        private void btnRegisterPurchase_Click(object sender, RoutedEventArgs e)
         {
             var phone = clPhone.Text;
             var title = moTitle.Text;
@@ -20,6 +21,7 @@ namespace Project1_v2.Windows
             CheckData checkData = new CheckData();
             Shop shop = new Shop();
 
+            // sprawdzanie czy pola są puste
             if(string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(title))
             {
                 isDataCorrect = false;
@@ -42,6 +44,7 @@ namespace Project1_v2.Windows
             }
         }
 
+        // przycisk do zamknięcia okna
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;

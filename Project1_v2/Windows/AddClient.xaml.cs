@@ -10,6 +10,7 @@ namespace Project1_v2.Windows
             InitializeComponent();
         }
 
+        // dodawanie klienta
         private void btnAddClient_Click(object sender, RoutedEventArgs e)
         {
             var name = clName.Text;
@@ -22,6 +23,7 @@ namespace Project1_v2.Windows
             CheckData checkData = new CheckData();
             Shop shop = new Shop();
 
+            // sprawdzanie, czy dane są poprawne
             if (!checkData.CheckName(name) || !checkData.CheckName(surname) || !checkData.CheckEmail(email) || !checkData.CheckPhoneNumber(phone))
             {
                 isDataCorrect = false;
@@ -44,6 +46,7 @@ namespace Project1_v2.Windows
             }
         }
 
+        // przycisk do zamknięcia okna
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
