@@ -7,7 +7,7 @@ namespace Project1_v2.Functions
     {
         private string connectionString = @"Server=LAPTOP-8THJJ3C4\SQLEXPRESS; Database=MovieShop; Integrated Security=True; TrustServerCertificate=True;";
 
-        public void addClientToDatabase(string name, string surname, string email, string phone)
+        public void AddClientToDatabase(string name, string surname, string email, string phone)
         {
             string query = "INSERT INTO Clients (Name, Surname, Email, PhoneNumber) VALUES (@name, @surname, @email, @phone)";
 
@@ -36,7 +36,7 @@ namespace Project1_v2.Functions
             }
         }
 
-        public void addMovieToDatabase(string title, string director, int yearOfPremiere, string genre, double price)
+        public void AddMovieToDatabase(string title, string director, int yearOfPremiere, string genre, double price)
         {
             string query = "INSERT INTO Movies (Title, Director, YearOfPremiere, Genre, Price) VALUES (@title, @director, @yearOfPremiere, @genre, @price)";
 
@@ -66,7 +66,7 @@ namespace Project1_v2.Functions
             }
         }
 
-        public void registerPurchaseToDatabase(string phone, string title)
+        public void RegisterPurchaseToDatabase(string phone, string title)
         {
             string query = @"INSERT INTO Purchases1 (DateOfPurchase, ClientID, MovieID)
                                 VALUES (GETDATE(),
@@ -91,9 +91,9 @@ namespace Project1_v2.Functions
                     }
                 }
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
-                MessageBox.Show("Błąd bazy danych: " + ex.Message);
+                MessageBox.Show("Błąd bazy danych: Wprowadzono nieistniejące dane. Podaj je ponownie");
             }
         }
     }

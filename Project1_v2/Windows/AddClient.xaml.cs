@@ -35,7 +35,7 @@ namespace Project1_v2.Windows
             {
                 try
                 {
-                    shop.addClientToDatabase(name, surname, email, phone);
+                    shop.AddClientToDatabase(name, surname, email, phone);
                 }
                 catch (Exception ex)
                 {

@@ -24,7 +24,7 @@ namespace Project1_v2.Windows
 
             Shop shop = new Shop();
 
-            if (yearOfPremiere < 1960 && yearOfPremiere > 2026 || price <= 0.0 || string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(director) || string.IsNullOrWhiteSpace(genre))
+            if (yearOfPremiere < 1900 && yearOfPremiere > 2026 || price <= 0.0 || string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(director) || string.IsNullOrWhiteSpace(genre))
             {
                 isDataCorrect = false;
             }
@@ -37,7 +37,7 @@ namespace Project1_v2.Windows
             {
                 try
                 {
-                    shop.addMovieToDatabase(title, director, yearOfPremiere, genre, price);
+                    shop.AddMovieToDatabase(title, director, yearOfPremiere, genre, price);
                 }
                 catch (Exception ex)
                 {

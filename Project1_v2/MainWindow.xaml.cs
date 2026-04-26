@@ -13,9 +13,9 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        loadClients();
-        loadMovies();
-        loadPurchaseHistory();
+        LoadClients();
+        LoadMovies();
+        LoadRecentPurchaseHistory();
     }
 
     private void AddClient_Click(object sender, RoutedEventArgs e)
@@ -24,7 +24,8 @@ public partial class MainWindow : Window
 
         if(addClient.ShowDialog() == true)
         {
-            loadClients();
+            LoadClients();
+            LoadRecentPurchaseHistory();
         }
     }
 
@@ -34,19 +35,24 @@ public partial class MainWindow : Window
         
         if(addMovie.ShowDialog() == true)
         {
-            loadMovies();
+            LoadMovies();
+            LoadRecentPurchaseHistory();
         }
     }
 
     private void AddPurchase_Click(object sender, RoutedEventArgs e)
     {
         AddPurchase addPurchase = new AddPurchase();
-        addPurchase.ShowDialog();
+
+        if(addPurchase.ShowDialog() == true)
+        {
+            LoadRecentPurchaseHistory();
+        }
     }
 
-    public void loadClients()
+    public void LoadClients()
     {
-        string query = "SELECT * FROM Clients";
+        string query = "SELECT * FROM Clients WHERE Active = 1";
 
         try
         {
@@ -67,9 +73,9 @@ public partial class MainWindow : Window
         }
     }
 
-    public void loadMovies()
+    public void LoadMovies()
     {
-        string query = "SELECT * FROM Movies";
+        string query = "SELECT * FROM Movies WHERE Active = 1";
 
         try
         {
@@ -90,11 +96,11 @@ public partial class MainWindow : Window
         }
     }
 
-    public void loadPurchaseHistory()
+    public void LoadRecentPurchaseHistory()
     {
         string query = @"SELECT TOP 10 p.DateOfPurchase, c.Name, c.Surname, m.Title, m.Price 
                             FROM Purchases1 AS p
-                            JOIN Clients AS C ON c.ClientID = p.ClientID
+                            JOIN Clients AS c ON c.ClientID = p.ClientID
                             JOIN Movies AS m ON m.MovieID = p.MovieID
                             ORDER BY p.PurchaseID DESC
                             ";
@@ -116,6 +122,19 @@ public partial class MainWindow : Window
         {
             MessageBox.Show("Błąd: " + ex.Message);
         }
+    }
+
+    private void ShowRecentPurchaseHistory_Click(object sender, RoutedEventArgs e)
+    {
+        LoadRecentPurchaseHistory();
+
+        MoviesGrid.SelectedItem = null;
+        ClientsGrid.SelectedItem = null;
+
+        DeleteMovie.IsEnabled = false;
+        ShowMoviePurchaseHistory.IsEnabled = false;
+        DeleteClient.IsEnabled = false;
+        ShowClientPurchaseHistory.IsEnabled = false;
     }
 
     private void ClientsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -151,7 +170,9 @@ public partial class MainWindow : Window
 
     private void DeleteClientFromDB(object id)
     {
-        string query = "DELETE FROM Clients WHERE ClientID = @id";
+        string query = @"UPDATE Clients 
+                        SET Active = 0
+                        WHERE ClientID = @id";
 
         try
         {
@@ -163,8 +184,50 @@ public partial class MainWindow : Window
                 command.Parameters.AddWithValue("@id", id);
                 command.ExecuteNonQuery();
 
-                loadClients();
+                LoadClients();
                 DeleteClient.IsEnabled = false;
+                ShowClientPurchaseHistory.IsEnabled = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Błąd: " + ex.Message);
+        }
+    }
+
+    private void ShowClientPurchaseHistory_Click(object sender, RoutedEventArgs e)
+    {
+        var selectedRow = ClientsGrid.SelectedItem as DataRowView;
+
+        if (selectedRow != null)
+        {
+            var clientId = selectedRow["ClientID"];
+
+            ClientPurchaseHistoryFromDB(clientId);
+        }
+    }
+
+    private void ClientPurchaseHistoryFromDB(object id)
+    {
+        string query = @"SELECT p.DateOfPurchase, c.Name, c.Surname, m.Title, m.Price 
+                            FROM Purchases1 AS p
+                            JOIN Clients AS c ON c.ClientID = p.ClientID
+                            JOIN Movies AS m ON m.MovieID = p.MovieID
+                            WHERE p.ClientID = @id
+                            ";
+
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", id);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                PurchasesGrid.ItemsSource = dataTable.DefaultView;
             }
         }
         catch (Exception ex)
@@ -206,7 +269,9 @@ public partial class MainWindow : Window
 
     private void DeleteMovieFromDB(object id)
     {
-        string query = "DELETE FROM Movies WHERE MovieID = @id";
+        string query = @"UPDATE Movies
+                        SET Active = 0
+                        WHERE MovieID = @id";
 
         try
         {
@@ -218,8 +283,50 @@ public partial class MainWindow : Window
                 command.Parameters.AddWithValue("@id", id);
                 command.ExecuteNonQuery();
 
-                loadMovies();
+                LoadMovies();
                 DeleteMovie.IsEnabled = false;
+                ShowMoviePurchaseHistory.IsEnabled = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Błąd: " + ex.Message);
+        }
+    }
+
+    private void ShowMoviePurchaseHistory_Click(object sender, RoutedEventArgs e)
+    {
+        var selectedRow = MoviesGrid.SelectedItem as DataRowView;
+
+        if (selectedRow != null)
+        {
+            var movieId = selectedRow["MovieID"];
+
+            MoviePurchaseHistoryFromDB(movieId);
+        }
+    }
+
+    private void MoviePurchaseHistoryFromDB(object id)
+    {
+        string query = @"SELECT p.DateOfPurchase, c.Name, c.Surname, m.Title, m.Price 
+                            FROM Purchases1 AS p
+                            JOIN Clients AS c ON c.ClientID = p.ClientID
+                            JOIN Movies AS m ON m.MovieID = p.MovieID
+                            WHERE p.MovieID = @id
+                            ";
+
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", id);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                PurchasesGrid.ItemsSource = dataTable.DefaultView;
             }
         }
         catch (Exception ex)

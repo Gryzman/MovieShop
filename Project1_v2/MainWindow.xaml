@@ -174,17 +174,114 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Button Style="{DynamicResource AddButtonStyle}"  Name="AddClient" Content="Dodaj nowego klienta" HorizontalAlignment="Left" Margin="17,32,0,0" VerticalAlignment="Top" Click="AddClient_Click" Width="200" FontSize="15"/>
-        <Button Style="{DynamicResource AddButtonStyle}" Name="AddMovie" Content="Dodaj nowy film" HorizontalAlignment="Left" Margin="17,73,0,0" VerticalAlignment="Top" Click="AddMovie_Click" Width="200" FontSize="15"/>
-        <Button Style="{DynamicResource AddButtonStyle}" Name="AddPurchase" Content="Zarejestruj zakup" HorizontalAlignment="Left" Margin="17,114,0,0" VerticalAlignment="Top" Width="200" FontSize="15" Click="AddPurchase_Click"/>
-        <Button Style="{DynamicResource DeleteButtonStyle}" Name="DeleteClient" IsEnabled="False" Content="Usuń klienta" HorizontalAlignment="Left" Margin="17,197,0,0" VerticalAlignment="Top" Width="200" FontSize="15" Click="DeleteClient_Click"/>
-        <Button Style="{DynamicResource DeleteButtonStyle}" Name="DeleteMovie" IsEnabled="False" Content="Usuń film" HorizontalAlignment="Left" Margin="17,238,0,0" VerticalAlignment="Top" Width="200" FontSize="15" Click="DeleteMovie_Click"/>
-        <Button Style="{DynamicResource ShowHistoryStyle}" Name="ShowClientPurchaseHistory" IsEnabled="False" Content="Historia zakupów klienta" HorizontalAlignment="Left" Margin="17,321,0,0" VerticalAlignment="Top" Width="200" FontSize="15"/>
-        <Button Style="{DynamicResource ShowHistoryStyle}" Name="ShowMoviePurchaseHistory" IsEnabled="False" Content="Historia zakupu filmu" HorizontalAlignment="Left" Margin="17,362,0,0" VerticalAlignment="Top" Width="200" FontSize="15"/>
-        <Button Style="{DynamicResource ShowHistoryStyle}" Name="ShowPurchaseHistory" Content="Historia ostatnich zakupów" HorizontalAlignment="Left" Margin="17,403,0,0" VerticalAlignment="Top" Width="200" FontSize="15"/>
-        <TextBlock Name="ClientList" HorizontalAlignment="Left" Margin="257,13,0,0" TextWrapping="Wrap" Text="Klienci" VerticalAlignment="Top" FontWeight="Bold" FontSize="18"/>
-        <TextBlock Name="MovieList" HorizontalAlignment="Left" Margin="257,199,0,0" TextWrapping="Wrap" Text="Filmy" VerticalAlignment="Top" FontWeight="Bold" FontSize="18"/>
-        <TextBlock Name="PurchaseHistory" HorizontalAlignment="Left" Margin="257,391,0,0" TextWrapping="Wrap" Text="Ostatnie zakupy" VerticalAlignment="Top" FontWeight="Bold" FontSize="18"/>
+        <Button 
+            Style="{DynamicResource AddButtonStyle}"  
+            Name="AddClient" 
+            Content="Dodaj nowego klienta" 
+            HorizontalAlignment="Left" 
+            Margin="17,32,0,0" 
+            VerticalAlignment="Top" 
+            Click="AddClient_Click" 
+            Width="200" 
+            FontSize="15"/>
+        <Button 
+            Style="{DynamicResource AddButtonStyle}" 
+            Name="AddMovie" 
+            Content="Dodaj nowy film" 
+            HorizontalAlignment="Left" 
+            Margin="17,73,0,0" 
+            VerticalAlignment="Top" 
+            Click="AddMovie_Click" 
+            Width="200" 
+            FontSize="15"/>
+        <Button 
+            Style="{DynamicResource AddButtonStyle}" 
+            Name="AddPurchase" 
+            Content="Zarejestruj zakup" 
+            HorizontalAlignment="Left" 
+            Margin="17,114,0,0" 
+            VerticalAlignment="Top" 
+            Width="200" 
+            FontSize="15" 
+            Click="AddPurchase_Click"/>
+        <Button 
+            Style="{DynamicResource DeleteButtonStyle}" 
+            Name="DeleteClient" 
+            IsEnabled="False"
+            Content="Usuń klienta" 
+            HorizontalAlignment="Left" 
+            Margin="17,197,0,0" 
+            VerticalAlignment="Top" 
+            Width="200" 
+            FontSize="15" 
+            Click="DeleteClient_Click"/>
+        <Button 
+            Style="{DynamicResource DeleteButtonStyle}" 
+            Name="DeleteMovie" 
+            IsEnabled="False"
+            Content="Usuń film" 
+            HorizontalAlignment="Left" 
+            Margin="17,238,0,0" 
+            VerticalAlignment="Top" 
+            Width="200" 
+            FontSize="15" 
+            Click="DeleteMovie_Click"/>
+        <Button 
+            Style="{DynamicResource ShowHistoryStyle}" 
+            Name="ShowClientPurchaseHistory" 
+            IsEnabled="False" 
+            Content="Historia zakupów klienta" 
+            HorizontalAlignment="Left" 
+            Margin="17,321,0,0" 
+            VerticalAlignment="Top" 
+            Width="200" 
+            FontSize="15" Click="ShowClientPurchaseHistory_Click"/>
+        <Button 
+            Style="{DynamicResource ShowHistoryStyle}" 
+            Name="ShowMoviePurchaseHistory" 
+            IsEnabled="False" 
+            Content="Historia zakupu filmu" 
+            HorizontalAlignment="Left" 
+            Margin="17,362,0,0" 
+            VerticalAlignment="Top" 
+            Width="200" 
+            FontSize="15" Click="ShowMoviePurchaseHistory_Click"/>
+        <Button 
+            Style="{DynamicResource ShowHistoryStyle}" 
+            Name="ShowRecentPurchaseHistory" 
+            Content="Historia ostatnich zakupów" 
+            HorizontalAlignment="Left" 
+            Margin="17,403,0,0" 
+            VerticalAlignment="Top" 
+            Width="200" 
+            FontSize="15" Click="ShowRecentPurchaseHistory_Click"/>
+        <TextBlock 
+            Name="ClientList" 
+            HorizontalAlignment="Left" 
+            Margin="257,13,0,0" 
+            TextWrapping="Wrap" 
+            Text="Klienci"
+            VerticalAlignment="Top" 
+            FontWeight="Bold" 
+            FontSize="18"/>
+        <TextBlock 
+            Name="MovieList" 
+            HorizontalAlignment="Left" 
+            Margin="257,199,0,0" 
+            TextWrapping="Wrap" 
+            Text="Filmy"
+            VerticalAlignment="Top" 
+            FontWeight="Bold" 
+            FontSize="18"/>
+        <TextBlock 
+            Name="PurchaseHistory" 
+            HorizontalAlignment="Left" 
+            Margin="257,391,0,0" 
+            TextWrapping="Wrap" 
+            Text="Ostatnie zakupy" 
+            VerticalAlignment="Top" 
+            FontWeight="Bold" 
+            FontSize="18"/>
         <DataGrid x:Name="ClientsGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="257,42,10,470" SelectionMode="Single" SelectionChanged="ClientsGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Imię" Binding="{Binding Name}" Width="*"/>

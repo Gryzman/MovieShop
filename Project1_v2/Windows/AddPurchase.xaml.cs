@@ -33,7 +33,7 @@ namespace Project1_v2.Windows
             {
                 try
                 {
-                    shop.registerPurchaseToDatabase(phone, title);
+                    shop.RegisterPurchaseToDatabase(phone, title);
                 }
                 catch(Exception ex)
                 {
